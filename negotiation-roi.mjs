@@ -44,9 +44,8 @@
  *   percentage into a dollar figure needs a baseline duration this script
  *   does not infer.
  *
- * Read-only / draft-only: never writes to any file, never sends or submits
- * anything. Prints a draft for the user to review themselves (AGENTS.md
- * "Ethical Use" — human always reviews before anything goes out).
+ * Read-only calculator: returns analysis to the calling workflow and prints
+ * a draft for review. Delivery is outside this calculator's scope.
  *
  * Run: node negotiation-roi.mjs                                  (JSON)
  *      node negotiation-roi.mjs --summary                        (human-readable)

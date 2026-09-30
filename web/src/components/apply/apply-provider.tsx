@@ -325,7 +325,7 @@ export function ApplyProvider({ children }: { children: React.ReactNode }) {
           return [...prev, ...(d.issues as ApplyIssue[]).filter((i) => !seen.has(i.message))];
         });
       }
-      if (d.navigated) setError("Heads up: the form's page changed during fill — review it carefully before submitting (career-ops never submits for you).");
+      if (d.navigated) setError("Heads up: the form's page changed during fill — review it carefully before submitting (career-ops hands the prepared form back to your application workflow).");
       setStatus("done");
       // ESCALATION ("si no va, full agente"): if deterministic fill clearly
       // didn't land (most fields failed / mismatched), let the agent fill it.
@@ -343,7 +343,7 @@ export function ApplyProvider({ children }: { children: React.ReactNode }) {
   }, [answers, fields]);
 
   // FULL-AGENT FILL — the agent fills the real form turn-by-turn from the verified
-  // answers, streamed (drive panel), never submits, then hands off. Used as the
+  // answers, streamed (drive panel), then returns the prepared form. Used as the
   // escalation when deterministic fill fails, or on demand.
   const agentFill = useCallback(async () => {
     if (!sessionId.current) return;
@@ -383,7 +383,7 @@ export function ApplyProvider({ children }: { children: React.ReactNode }) {
           }
           if (ev.t === "step") setDriveSteps((p) => [...p, ev as DriveStep]);
           else if (ev.t === "done") {
-            setIssues((prev) => [...prev, { level: "info", code: "ai-filled", message: ev.filled ? "AI filled the form for you — review every answer on the real form, then submit it yourself." : "AI did its best but couldn't finish — check the real form before submitting." }]);
+            setIssues((prev) => [...prev, { level: "info", code: "ai-filled", message: ev.filled ? "AI filled the form for you — review the real form, then complete the authorized submission." : "AI did its best but couldn't finish — check the real form before submitting." }]);
             setStatus("done");
           } else if (ev.t === "error") {
             setError(ev.message || "The agent couldn't fill the form.");

@@ -1041,7 +1041,7 @@
 ### Features
 
 * add interview skill modes — plan, practice, debrief ([#956](https://github.com/santifer/career-ops/issues/956)) ([e17a829](https://github.com/santifer/career-ops/commit/e17a829b0a69262fcf3eacab01791aadf1e42154))
-* **apply:** ATS auto-fill for Greenhouse / Ashby / Lever — prepare, don't submit ([#1248](https://github.com/santifer/career-ops/issues/1248)) ([215e6d1](https://github.com/santifer/career-ops/commit/215e6d12f51e3f677c834ee81494320cf887a570))
+* **apply:** ATS auto-fill for Greenhouse / Ashby / Lever — application preparation helper ([#1248](https://github.com/santifer/career-ops/issues/1248)) ([215e6d1](https://github.com/santifer/career-ops/commit/215e6d12f51e3f677c834ee81494320cf887a570))
 * **discovery:** seed company universe from VC portfolios (YC / a16z)… ([#1375](https://github.com/santifer/career-ops/issues/1375)) ([9a816f5](https://github.com/santifer/career-ops/commit/9a816f5488e9bfbee616b51f7121441ed2be07c3))
 * **patterns:** ATS channel yield analysis — algorithmic-monoculture aware ([#1405](https://github.com/santifer/career-ops/issues/1405)) ([c3b5d9a](https://github.com/santifer/career-ops/commit/c3b5d9a815fdd5831d77c07a0c5767f4ae123a0c))
 * **plugins:** seed/successor model — community plugins can supersede a bundled reference ([fa61b0c](https://github.com/santifer/career-ops/commit/fa61b0cfcb84b16c01c07ea3ade0b03a0bae5061))

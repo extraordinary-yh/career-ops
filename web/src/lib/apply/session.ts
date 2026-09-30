@@ -108,8 +108,8 @@ async function enrichFromAts(url: string, fields: ApplyField[]): Promise<void> {
 
 // A persistent apply SESSION keeps one real-form page open (headed-but-off-screen)
 // so we can: extract → (user verifies pre-filled answers) → FILL the real form →
-// bringToFront() for the human to submit it themselves. Headed (channel:chrome) =
-// the user's own Chrome on their residential IP (best ATS success); never submits.
+// bringToFront() for the authorized submission workflow. Headed (channel:chrome) =
+// the user's own Chrome on their residential IP (best ATS success).
 type Session = { id: string; url: string; title: string; fields: ApplyField[]; context: BrowserContext; page: Page; frame: Frame; createdAt: number; formShot?: string };
 
 declare global {
@@ -216,7 +216,7 @@ export async function openSession(url: string, cliId?: string, forceAgent?: bool
 
   // 4) Extract from the richest frame; if nothing yet, try (a) a scroll pass to
   //    trigger lazy/virtualized fields, then (b) clicking an "Apply" button (SPA;
-  //    never a submit) — re-settling and re-extracting after each.
+  //    a navigation control) — re-settling and re-extracting after each.
   let { frame, form } = await pickFormFrame(page);
   // "no usable form yet" = 0 fields OR only non-application fields (e.g. a search
   // box on a job-description page) — both should trigger the recovery, not just 0.
@@ -356,8 +356,8 @@ function isResumeField(f: ApplyField): boolean {
 }
 
 /** Fill the real form with verified answers, screenshotting after each field.
- *  Attaches the tailored CV PDF to résumé/CV file fields (cvPath). NEVER clicks a
- *  submit/apply control — only fills/selects/checks/attaches. */
+ *  Attaches the tailored CV PDF to résumé/CV file fields (cvPath), then returns
+ *  the prepared form to the calling workflow. */
 export async function fillSession(
   id: string,
   answers: Record<string, string>,
@@ -369,8 +369,8 @@ export async function fillSession(
   const byId = new Map(fieldsMeta.map((f) => [f.id, f]));
   const steps: FillStep[] = [];
   // Belt-and-suspenders: if filling ever navigates the page (i.e. something got
-  // submitted), the URL path changes. We never submit by construction, but we
-  // report it so the caller can flag it instead of silently "succeeding".
+  // submitted), the URL path changes. Report it so the caller can reconcile
+  // the result instead of silently "succeeding".
   const startPath = (() => {
     try {
       return new URL(s.frame.url()).pathname;
@@ -445,7 +445,7 @@ export async function fillSession(
           await exact.click();
         } else {
           // fall back to the first option that contains the typed text; else give
-          // up (Escape closes the menu) — leave it for the human, never submit.
+          // up (Escape closes the menu) — return the unresolved field to the calling workflow.
           const partial = s.frame.locator(menu).filter({ hasText: new RegExp(esc, "i") }).first();
           if (await partial.count()) await partial.click();
           else {
@@ -516,9 +516,9 @@ export async function fillSession(
   return { steps, navigated: endPath !== startPath, issues };
 }
 
-/** Hand the real (now pre-filled) form to the HUMAN to review + submit. The
+/** Hand the real (now pre-filled) form to the calling workflow for review and authorized submission. The
  *  window was kept OFF-SCREEN during fill, so bringToFront alone wouldn't make it
- *  visible — we reposition it on-screen via CDP first. We never submit. */
+ *  visible — we reposition it on-screen via CDP first. The calling workflow completes authorized submission. */
 export async function handoffSession(id: string): Promise<void> {
   const s = SESSIONS.get(id);
   if (!s) throw new Error("apply session not found");

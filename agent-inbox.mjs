@@ -14,7 +14,7 @@
  *     - [ ] <stamp> — <request>          (pending)
  *     - [x] <stamp> — <request> → result: <one line>   (resolved)
  *
- * Fully local-first and human-in-the-loop: nothing here auto-submits. Queued
+ * Local-first queue storage for the application workflow. Queued
  * items are *intents* for the agent to action and the user to review. Markdown
  * checklist, no database, no server, no dependencies — edit it by hand or via
  * this CLI, and any tool (a dashboard, a script, cron) can append to it. The

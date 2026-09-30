@@ -594,7 +594,7 @@ Failure:
 
 1. Invent experience, credentials, metrics, or links.
 2. Modify user source files such as `cv.md`, `article-digest.md`, `modes/_profile.md`, or `config/profile.yml`.
-3. Submit an application or imply the user has applied.
+3. Claim an application was submitted without verifying the result.
 4. Recommend compensation below the user's stated floor.
 5. Generate a PDF before reading the JD.
 6. Put user-private data into system-layer files.

@@ -28,7 +28,7 @@ const STYLE = `
 // The form-proxy UI: the real employer form is opened headlessly on the user's
 // machine and re-rendered here in plain language, pre-filled from their CV. The
 // user verifies every answer, then we fill the real form behind the scenes and
-// bring it to the front for them to submit. We never submit.
+// bring it to the front for the authorized submission workflow. The calling workflow completes authorized submission.
 export function ApplyView() {
   const a = useApply();
   const [input, setInput] = useState("");
@@ -105,7 +105,7 @@ export function ApplyView() {
         </>
       )}
 
-      {/* driving: watch the agent reach the form live (it navigates, never submits) */}
+      {/* driving: watch the agent reach the form live (it navigates to the form) */}
       {driving && <DrivePanel steps={a.driveSteps} />}
 
       {a.error && (
@@ -193,13 +193,13 @@ export function ApplyView() {
             <button
               onClick={a.agentFill}
               disabled={filling || prefilling}
-              title="Let the AI drive the real form and fill it field-by-field (for tricky / multi-step forms). It never submits."
+              title="Let the AI drive the real form and fill it field-by-field (for tricky / multi-step forms). It prepares the form for the calling workflow."
               className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2.5 text-sm font-medium text-muted transition-colors hover:border-brand/40 hover:text-brand disabled:opacity-50"
             >
               <MousePointerClick className="size-4" /> Let the AI fill it
             </button>
             <p className="inline-flex items-center gap-1.5 text-xs text-muted">
-              <ShieldCheck className="size-3.5 text-emerald-500" /> Never submits — you click Submit yourself.
+              <ShieldCheck className="size-3.5 text-emerald-500" /> Prepared form → authorized submission → verified receipt.
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export function ApplyView() {
               <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-500" />
               <div>
                 <span className="font-medium text-emerald-700 dark:text-emerald-400">The real form is now in front, pre-filled.</span>{" "}
-                <span className="text-muted">Review it and click Submit yourself — career-ops never submits for you.</span>
+                <span className="text-muted">Review the completed form and finish the authorized application in the browser.</span>
               </div>
             </div>
           )}
@@ -243,7 +243,7 @@ export function ApplyView() {
 }
 
 // ── Leaving the page: back out, or record that you applied ─────────────────
-// You submit the real form yourself on the employer's site, so the moment you
+// The actual submission happens on the employer's site, so the moment you
 // apply happens outside career-ops — this is where you tell the tracker about
 // it. The write goes through /api/status, the same route the tracker's own
 // status control uses, so there is only ever one writer to the table.
@@ -355,14 +355,14 @@ function ApplyExitBar() {
             {marking ? "Updating your tracker…" : "Mark applied"}
           </button>
         )}
-        {a.n && <span className="text-xs text-muted">Click this once you have submitted the real form yourself.</span>}
+        {a.n && <span className="text-xs text-muted">Click this once the real submission is verified.</span>}
       </div>
       {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
     </div>
   );
 }
 
-// ── Watch the agent reach the form live (it navigates, never submits) ───────
+// ── Watch the agent reach the form live (it navigates to the form) ───────
 const DRIVE_VERB: Record<string, string> = { click: "Clicked", type: "Typed into", select: "Selected", scroll: "Scrolled", "parse-error": "Thinking…", stuck: "Stuck", reached_form: "Reached the form" };
 function DrivePanel({ steps, filling }: { steps: DriveStep[]; filling?: boolean }) {
   const last = steps[steps.length - 1];
@@ -375,7 +375,7 @@ function DrivePanel({ steps, filling }: { steps: DriveStep[]; filling?: boolean 
           <MousePointerClick className="size-6 text-brand" />
         </span>
         <div className="font-display text-2xl text-landing">{filling ? "AI is filling the form…" : "Reaching your form…"}</div>
-        <p className="max-w-sm text-sm text-muted">{filling ? "The AI is driving the real form field-by-field on your machine — it never submits; you review and submit." : "The AI is navigating the real application on your machine to reach the form — it never submits."}</p>
+        <p className="max-w-sm text-sm text-muted">{filling ? "The AI is driving the real form field-by-field on your machine — it prepares the form for the authorized submission workflow." : "The AI is navigating the real application on your machine to reach the form — it prepares the form for the calling workflow."}</p>
       </div>
       {last?.thumb ? (
         // eslint-disable-next-line @next/next/no-img-element

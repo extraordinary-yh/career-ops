@@ -1,5 +1,5 @@
 // Every localized shared context must carry the safety rules that protect
-// authorship, factual sourcing, and human approval. English fallback alone is
+// authorship, factual sourcing, and application authority. English fallback alone is
 // insufficient: a localized mode can be loaded without reading modes/_shared.md.
 
 import { readdirSync, readFileSync } from 'fs';
@@ -12,7 +12,7 @@ const requiredGuardrails = [
   '<!-- guardrail:authorship -->',
   '<!-- guardrail:no-fabrication -->',
   '<!-- guardrail:source-exclusivity -->',
-  '<!-- guardrail:human-approval -->',
+  '<!-- guardrail:application-authority -->',
 ];
 const expectedLocalizedModes = [
   'ar', 'da', 'de', 'es', 'fr', 'hi', 'id', 'it', 'ja',

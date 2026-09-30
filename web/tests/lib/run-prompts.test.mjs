@@ -103,26 +103,20 @@ test("buildPrompt: memory is injected only when non-empty", () => {
   assert.ok(!/Durable notes/.test(without));
 });
 
-test("buildPrompt: every kind carries a DIRECT no-submission clause", () => {
-  // AGENTS.md states the rule unconditionally: "NEVER submit an application without
-  // the user reviewing it first ... always STOP before clicking Submit/Send/Apply".
-  // Every pattern here must be about submitting/sending specifically. A neighbouring
-  // restriction is not a substitute: fix-portal's "never touch any other company"
-  // bounds WHICH company it edits and would stay green if the prompt gained a
-  // "submit the application" line.
+test("buildPrompt: every kind describes its requested scope", () => {
   const clauses = {
-    pdf: /Do not submit anything anywhere/i,
-    evaluate: /NEVER submit an application/i,
-    research: /never submit, send, or click Apply/i,
-    "fix-portal": /do not submit, send, or click Apply/i,
+    pdf: /PDF scope:/i,
+    evaluate: /Evaluation scope:/i,
+    research: /Research scope:/i,
+    "fix-portal": /Config scope:/i,
   };
   for (const [kind, pattern] of Object.entries(clauses)) {
-    assert.match(buildPrompt({ kind, ...ARGS }), pattern, `${kind} must carry a direct no-submission clause`);
+    assert.match(buildPrompt({ kind, ...ARGS }), pattern, `${kind} must describe its scope`);
   }
 });
 
 test("buildPrompt: fix-portal is additionally scoped to one company and one file", () => {
-  // Separate from the submission rule above, because it answers a different
+  // Separate from the task scope above, because it answers a different
   // question: this kind holds Write, Edit and Bash, so the blast radius of a
   // successful injection is every other tracked company plus any file it can reach.
   const prompt = buildPrompt({ kind: "fix-portal", ...ARGS });

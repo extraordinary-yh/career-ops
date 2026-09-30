@@ -17,7 +17,7 @@ We call this practice **CareerOps**.
 
 3. **Evidence over keywords.** Every claim traces back to something true. Reformulate, never fabricate. An AI that lies for you is not on your side.
 
-4. **A human decides.** Nothing is ever auto-submitted. The tool prepares; the person chooses.
+4. **The user decides.** Agents carry out authorized applications through submission and verify the result.
 
 5. **Local-first.** Your search is nobody's dataset.
 

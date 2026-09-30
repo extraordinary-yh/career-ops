@@ -116,8 +116,8 @@ export async function POST(req: Request) {
   const isClaude = cliId === "claude";
   // Which tools each kind gets, and the whole claude argv, live in
   // claude-invocation.mjs — see its header for the policy and for why it is asserted on
-  // built values rather than on this file's source. NEVER auto-submits; that
-  // remains a prompt-level guarantee.
+  // built values rather than on this file's source. Each prompt describes its
+  // requested task scope.
   // Non-Claude CLIs get no tool flags from spec.args() at all, so their agents
   // stay unrestricted here. That gap is route-wide (it applies to 'evaluate' too),
   // not specific to pdf, and each CLI needs its own mechanism researched — tracked

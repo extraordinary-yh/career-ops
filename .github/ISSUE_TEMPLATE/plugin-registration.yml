@@ -42,7 +42,7 @@ body:
     attributes:
       label: Attestations
       options:
-        - label: It is human-in-the-loop — it never auto-submits an application
+        - label: It follows the user-authorized workflow and declared hook capabilities
           required: true
         - label: It reads PUBLIC data or the user's OWN account only — no centralized infrastructure
           required: true

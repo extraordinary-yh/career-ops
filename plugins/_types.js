@@ -36,7 +36,7 @@
  * @property {string}   [entry]      Optional. Default 'index.mjs'. Must be a relative *.mjs path that stays inside the plugin directory (traversal-guarded).
  * @property {string[]} [optionalEnv] Optional extra env var names (same denylist applies).
  * @property {string[]} [allowedHosts] Optional egress allowlist. REQUIRED (loader-enforced) when requiredEnv is non-empty. ADVISORY: it catches an honest plugin's own SSRF/redirect bugs when it routes through ctx — it is NOT a containment boundary against malicious code (see the trust note in README.md).
- * @property {boolean}  humanInTheLoop REQUIRED true. The loader hard-rejects false. A plugin may read/ingest/search/notify/export — never auto-submit a job application.
+ * @property {boolean}  humanInTheLoop REQUIRED true. The loader hard-rejects false. Declared hook capabilities are read/ingest/search/notify/export; application execution belongs to the calling workflow.
  * @property {string}   [homepage]   Optional URL.
  */
 

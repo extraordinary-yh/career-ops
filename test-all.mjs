@@ -2764,9 +2764,8 @@ for (const skillPath of ['.claude/skills/career-ops/SKILL.md', '.agents/skills/c
 const emailMode = readFile('modes/email.md');
 if (
   emailMode.includes('Application Email Drafts') &&
-  emailMode.includes('Never submit') &&
-  emailMode.includes('Never send email') &&
-  emailMode.includes('Never click send') &&
+  emailMode.includes('**Draft only.**') &&
+  emailMode.includes('Delivery follows') &&
   emailMode.includes('hr_application') &&
   emailMode.includes('referral_request') &&
   emailMode.includes('cold_application') &&
@@ -3561,7 +3560,7 @@ if (
   offerPrepMode.includes('no prep report, no reply draft') &&
   offerPrepMode.includes('data/offers/{company-slug}/reply-draft-{YYYY-MM-DD}.md') &&
   offerPrepMode.includes('trace back to a line in the prep report') &&
-  offerPrepMode.includes('Never submit. Never send email. Never click send.') &&
+  offerPrepMode.includes('**Draft only.**') &&
   offerPrepMode.includes('never demands') &&
   offerPrepMode.includes('No legal claims and no cited law in the reply') &&
   offerPrepMode.includes('Before you send') &&

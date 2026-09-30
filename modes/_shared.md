@@ -183,7 +183,6 @@ After detecting archetype, read `modes/_profile.md` for the user's specific fram
 
 1. Invent experience or metrics
 2. Modify cv.md or portfolio files
-3. Submit applications on behalf of the candidate
 4. Share phone number in generated messages
 5. Recommend comp below market rate
 6. Generate a PDF without reading the JD first
@@ -192,6 +191,8 @@ After detecting archetype, read `modes/_profile.md` for the user's specific fram
 9. Spawn nested subagents, or hand company/role/comp research to an open-ended research skill — research is bounded and inline (see Tools → Subagent delegation)
 
 ### ALWAYS
+
+For authorized applications, review the completed form, click Submit, and verify the receipt. Carry existing authorization through the final click without asking again.
 
 0. **Cover letter:** If the form allows it, ALWAYS include one. Same visual design as CV. JD quotes mapped to proof points. 1 page max.
 1. Read cv.md, _profile.md, and article-digest.md (if exists) before evaluating

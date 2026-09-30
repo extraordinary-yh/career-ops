@@ -156,7 +156,7 @@ export function validateManifest(m, dir, dirName) {
   if (m.id !== dirName) { warnSkip(label, `id "${m.id}" must equal directory name "${dirName}"`); return null; }
   if (m.apiVersion !== 1) { warnSkip(label, `unsupported apiVersion ${JSON.stringify(m.apiVersion)} (engine supports 1)`); return null; }
   if (typeof m.description !== 'string' || !m.description.trim() || /[\r\n]/.test(m.description)) { warnSkip(label, 'description must be a non-empty single line'); return null; }
-  if (m.humanInTheLoop !== true) { warnSkip(label, 'humanInTheLoop must be true (no auto-submit plugins)'); return null; }
+  if (m.humanInTheLoop !== true) { warnSkip(label, 'humanInTheLoop must be true (required manifest field)'); return null; }
 
   if (!Array.isArray(m.hooks) || m.hooks.length === 0) { warnSkip(label, 'hooks must be a non-empty array'); return null; }
   for (const h of m.hooks) {

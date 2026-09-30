@@ -20,7 +20,7 @@ table in `AGENTS.md` (mirrored in `CLAUDE.md`).
 | `pipeline.md` | `pipeline` | Process the URL inbox (`data/pipeline.md`) |
 | `scan.md` | `scan` | Portal scanner (job discovery) |
 | `batch.md` | `batch` | Mass processing with headless workers |
-| `apply.md` | `apply` | Live application assistant (form filling; never submits) |
+| `apply.md` | `apply` | Live application assistant (form filling and authorized submission workflow) |
 | `pdf.md` | `pdf` | ATS-optimized PDF generation |
 | `latex.md` | `latex` | LaTeX/Overleaf CV export |
 | `text.md` | `text` | Tailored markdown CV (no PDF) |

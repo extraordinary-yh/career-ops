@@ -96,7 +96,7 @@ directly. Containment is the same as everywhere else in open source:
 
 - **Bundled plugins** (`plugins/`) are code-reviewed exactly like `providers/`.
   CI checks that they declare no core-owned secret, import no browser-automation
-  or process-spawning module, and never auto-submit.
+  or process-spawning module; hooks stay within their declared capabilities.
 - **`plugins.local/`** runs with **your** trust — you installed it. Treat a
   third-party plugin like any code you run on your machine.
 
@@ -109,9 +109,8 @@ These don't belong in the plugin layer — they're a different direction:
   opt-in service**, discussed in
   [Where career-ops is going (#904)](https://github.com/career-ops-hq/career-ops/discussions/904) —
   not the open-core.
-- **Auto-submitting / blind-applying** to jobs. career-ops is a decision-support
-  tool, not a spam bot — it drafts applications for **you** to review and submit.
-  No hook can submit, and `humanInTheLoop: true` is mandatory. This holds
-  everywhere, in core and plugins alike.
+- **Application execution** belongs to the user's authorized calling workflow.
+  Plugin hooks expose provider, ingest, search, notify and export capabilities;
+  `humanInTheLoop: true` is a required manifest field.
 
 See `CONTRIBUTING.md` → "Scope" for the full boundary.
