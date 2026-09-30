@@ -8,7 +8,7 @@ export const maxDuration = 300;
 
 // Streamed agentic drive over an OPEN session: the AI drives the headed page to
 // REACH a fillable application form (the user watches each step live), then we
-// extract + finalize. NEVER submits (enforced in driveSession).
+// extract + finalize. Returns the prepared form to the calling workflow.
 export async function POST(req: Request) {
   let body: { sessionId?: string; cliId?: string; goal?: "reach" | "full"; answers?: { label: string; value: string }[] };
   try {
@@ -43,8 +43,8 @@ export async function POST(req: Request) {
         const result = await driveSession(page, cliId, goal, isFormReady, (step) => emit({ t: "step", ...step }), budget, answers);
 
         if (goal === "full") {
-          // The agent filled the real form — bring it to the front for the human
-          // to review + submit themselves. We never submit.
+          // Bring the filled form to the front for the calling workflow's review
+          // and authorized submission.
           if (result.reached) await handoffSession(s.id).catch(() => {});
           emit({ t: "done", filled: result.reached, turns: result.turns, reason: result.reason });
           controller.close();

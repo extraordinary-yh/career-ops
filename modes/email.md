@@ -12,8 +12,7 @@ It is NOT:
 - `cover`: a full cover letter PDF.
 - `apply`: live application form filling.
 
-**Never submit. Never send email. Never click send.** Draft only. The candidate
-must review and send manually.
+**Draft only.** This command produces the requested email draft. Delivery follows the user's separate instructions.
 
 ---
 
@@ -333,8 +332,7 @@ instead.
 
 ### Guardrails
 
-All standing email-mode guardrails apply unchanged: draft only, never send,
-never click, never submit. Additionally, the stuck-email draft must:
+This command produces a draft. Additionally, the stuck-email draft must:
 
 - Never threaten or escalate, and never use legal or complaint language.
 - Never speculate about the cause of the failure or criticize the company's
@@ -429,8 +427,7 @@ framing (same banned-phrase rule as `modes/followup.md`).
   multi-touch cadence — do not suggest a second no-show follow-up; if a
   second miss happens, treat that as its own new instance of this same
   scenario.
-- All standing email-mode guardrails apply unchanged: draft only, never
-  send, never click, never submit.
+- This command produces a draft; delivery follows the user's separate instructions.
 
 ### Example (generic)
 

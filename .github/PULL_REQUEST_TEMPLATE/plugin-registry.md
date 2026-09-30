@@ -32,12 +32,12 @@ Paste the registry entry (one object), pinned to the exact reviewed commit:
 
 - [ ] Naming `career-ops-plugin-<name>`; `id` == name minus the prefix
 - [ ] Minimum files present (manifest.json, index.mjs, README.md, LICENSE)
-- [ ] Manifest valid: apiVersion 1, `humanInTheLoop: true`, hooks ⊆ {provider, ingest, search, notify, export} — **no apply/submit**
+- [ ] Manifest valid: apiVersion 1, `humanInTheLoop: true`, hooks ⊆ {provider, ingest, search, notify, export}
 - [ ] MIT-compatible LICENSE; no personal data in the repo
 - [ ] Egress: `allowedHosts` are real public hosts; no IP literals / metadata / `*.internal`; no localhost without `allowsLocalhost` + a reason
 - [ ] Static audit clean: no `child_process`/`playwright`/raw sockets/global `fetch`/`eval`/bare-dependency imports (egress only via `ctx.fetch`)
 - [ ] No core-owned secrets in `requiredEnv`
-- [ ] Reads PUBLIC data or the user's OWN account only — no centralized infrastructure, no auto-submit, no blind-apply
+- [ ] Reads PUBLIC data or the user's OWN account only — no centralized infrastructure, actions stay within user authorization
 - [ ] No commercial / hosted-service / monetization wording (the project is free and local-first)
 - [ ] If it ships a skill: domain-scoped — does not instruct the agent to edit core files, change scoring, reveal secrets, or act outside its hooks
 - [ ] `sha` is pinned to the exact reviewed commit

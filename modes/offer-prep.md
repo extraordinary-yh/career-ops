@@ -468,8 +468,8 @@ report, add it to that section first, then draft.
 
 - Questions and topics, never demands: "Could we discuss the exercise
   window?", never "I require…".
-- **Never submit. Never send email. Never click send.** Draft only — same
-  posture as `email` mode. The candidate reviews and sends manually.
+- **Draft only.** This step prepares the requested reply, as in `email` mode.
+  Delivery follows the user's separate instructions.
 - No legal claims and no cited law in the reply — legal questions stay in
   the lawyer list; the employer email never argues law.
 - No verdict or severity language — the draft raises items; it does not

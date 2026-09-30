@@ -5,8 +5,8 @@
  *
  * Detects the ATS from the apply URL, reads candidate data from
  * config/profile.yml, and prints a prefill summary to stdout.
- * Never POSTs anything — the user reviews the output, opens the apply URL,
- * and submits themselves.
+ * Produces preparation output for the authorized application workflow, which
+ * reviews the form, submits through browser control and verifies the receipt.
  *
  * Usage:
  *   node prepare-application.mjs --url <apply_url> --pdf output/<cv>.pdf

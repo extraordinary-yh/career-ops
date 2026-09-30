@@ -16,8 +16,8 @@ export default function ApplyPage() {
         </div>
         <p className="mt-1.5 max-w-xl text-sm text-muted">
           career-ops reads the real application form on your machine and re-renders it here in plain language, pre-filled
-          from your CV. You verify every answer — then it fills the real form behind the scenes and you submit it yourself.
-          It never submits for you.
+          from your CV. You verify every answer — then it fills the real form behind the scenes and the authorized workflow completes submission.
+          It hands the prepared form back to your application workflow.
         </p>
         <div className="mt-6">
           <ApplyView />

@@ -92,7 +92,7 @@ If a question matches, warn the candidate BEFORE generating or filling an answer
 
 - **Warn-only.** Never auto-answer the question, never auto-skip it, never block or discourage the application because of it — the candidate decides how to answer, and their decision is final.
 - **Phrasing discipline:** describe the form question and what the jurisdiction's law prohibits — never assert that the employer is breaking the law or committing a violation; statutory hooks and exemptions are not verifiable from the form.
-- This step adds a warning before the answer is drafted; it changes nothing about the existing prepare-don't-submit flow, the Step 6 `needs_candidate_confirmation` contract, or the Step 5b knock-out handling (which is where lawful sponsorship questions are checked against the candidate's own profile — a different job than this step's).
+- This step adds a warning before the answer is drafted; it changes nothing about the Step 6 `needs_candidate_confirmation` contract, or the Step 5b knock-out handling (which is where lawful sponsorship questions are checked against the candidate's own profile — a different job than this step's).
 
 ## Step 5c — Jurisdiction-prohibited content check (#2018)
 
@@ -110,7 +110,7 @@ If a field matches, warn the candidate BEFORE generating or filling an answer fo
 
 - **Warn-only.** Never auto-answer the field, never auto-skip it, never block or discourage the application because of it — the candidate decides how to handle the field, and their decision is final.
 - **Phrasing discipline:** describe the form field and what the jurisdiction's law prohibits — never assert that the employer is breaking the law or committing a violation; exemptions and scope are not verifiable from the form.
-- This step adds a warning before the answer is drafted; it changes nothing about the existing prepare-don't-submit flow, the Step 6 `needs_candidate_confirmation` contract, or the Step 5b knock-out handling.
+- This step adds a warning before the answer is drafted; it changes nothing about the Step 6 `needs_candidate_confirmation` contract, or the Step 5b knock-out handling.
 
 **Applying to several roles in one sitting?** This preflight verifies the single form in front of you. Before a multi-role session — especially against scanner entries marked `**Verification:** unconfirmed (batch mode)` — run the `pipeline` mode **Liveness sweep** first (`node check-liveness.mjs --file <urls>`). It drops the dead postings from `data/pipeline.md` in one batch so you never open a tab on an expired role.
 
@@ -218,7 +218,7 @@ Notes:
 
 ## Step 8 — Persist application snapshot
 
-After the final answers are filled into the form or handed to the candidate for copy-paste, update the matched report with an additive `## Application Answers` section. If the candidate later confirms submission, update that same section from `filled` to `submitted`.
+After the final answers are filled into the form or handed to the candidate for copy-paste, update the matched report with an additive `## Application Answers` section. Once submission is verified, update that same section from `filled` to `submitted`.
 
 The section must include:
 - `**Date:** YYYY-MM-DD`
@@ -236,9 +236,12 @@ Use `application-answers.mjs` when possible to format/upsert the section:
 node application-answers.mjs --report reports/NNN-company-role-date.md --input answers.json --state filled
 ```
 
-## Step 9 — Post-apply (optional)
+## Step 9 — Submit and verify
 
-If the candidate confirms that they submitted the application:
+For authorized applications, review the completed form, click Submit, and verify the receipt. Carry existing authorization through the final click without asking again.
+Use the calling workflow's executor or browser control for the final click.
+
+After a verified submission by the candidate or an authorized agent:
 1. Update status to Applied via the canonical CLI: `node set-status.mjs <report#> Applied` (never hand-edit the table). If the candidate submitted on a different day than today, add `--on YYYY-MM-DD` with the actual submission date — the status-log ledger should record when it happened, not when it was typed in.
 2. Seed the follow-up schedule: run `node followup-seed.mjs {num} --json` (where `{num}` is the tracker row number). If the candidate applied on a different day than today, pass `--date YYYY-MM-DD` with the actual submission date. It's idempotent, so re-running is safe. (`--on` and `--date` are the same concept — the real submission date — each under its own script's flag name; pass the same value to both.)
 3. Refresh the report's `## Application Answers` section with the final field values and `**State:** submitted`

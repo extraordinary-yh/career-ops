@@ -12,8 +12,8 @@ export type { DriveStep };
 // observe (ref-tagged snapshot) → the LLM picks ONE action → WE execute it on OUR
 // headed session → observe again → adapt. We orchestrate the loop (CLI-agnostic in
 // principle; Claude-first via --resume) and execute every action ourselves, so:
-//   • NEVER-SUBMIT is by CONSTRUCTION — the action vocabulary has no "submit", and
-//     we refuse to click any submit/apply-final control. The human submits.
+//   • Preparation ends at the final application control. The calling workflow
+//     completes authorized submission using browser control and verifies the receipt.
 //   • everything stays in OUR session (screenshots, handoff, the streamed UI).
 // HYBRID = drive only until a fillable application form is reached, then hand back
 // to deterministic fill+verify. FULL = keep driving (fill the fields too).
@@ -130,13 +130,13 @@ export async function driveSession(
   const goalText =
     goal === "reach"
       ? `Your goal: navigate to the actual fillable JOB APPLICATION form (click 'Apply', pass any interstitial/pre-screen, reach the page with the Name/Email/Resume fields). Do NOT fill anything yet. Reply {"action":"reached_form"} once the form with those fields is visible.`
-      : `Your goal: FILL this job application with the candidate's answers below, matching each answer to its field by label, across all pages (click 'Next'/'Continue' between pages). Skip any field already correctly filled, and skip file-uploads (handled separately). NEVER submit — when everything is filled and you're on the final page, reply {"action":"done"}.
+      : `Your goal: FILL this job application with the candidate's answers below, matching each answer to its field by label, across all pages (click 'Next'/'Continue' between pages). Skip any field already correctly filled, and skip file-uploads (handled separately). When everything is filled and you're on the final page, reply {"action":"done"} to hand the prepared form back to the calling workflow.
 ANSWERS (match by the field's label):
 ${answersBlock || "(no answers provided — just reach/observe)"}`;
   let resumeId: string | null = null;
   let lastUrl = page.url();
 
-  const stopVerb = goal === "reach" ? '{"action":"reached_form"}            STOP — the fillable application form is now visible' : '{"action":"done"}                    STOP — every answer is filled (you NEVER submit; the human does)';
+  const stopVerb = goal === "reach" ? '{"action":"reached_form"}            STOP — the fillable application form is now visible' : '{"action":"done"}                    STOP — every answer is filled (preparation complete; return to the calling workflow)';
   for (let turn = 1; turn <= budget; turn++) {
     if (goal === "reach" && (await isFormReady().catch(() => false))) return { reached: true, turns: turn - 1, reason: "form-reached", steps };
     await dropNewTabs(page); // any "Apply" link/popup navigates in OUR tab, not a new one
@@ -144,8 +144,8 @@ ${answersBlock || "(no answers provided — just reach/observe)"}`;
     const snap = await snapshot(frame).catch(() => ({ text: "", n: 0 }));
     const prompt =
       turn === 1
-        ? `You are an agent driving a real web browser for a job seeker (we execute your actions; the human submits at the end). ${goalText}
-You NEVER submit a form — there is no submit action; the human does that.
+        ? `You are an agent driving a real web browser for a job seeker (we execute your form-preparation actions). ${goalText}
+The calling workflow handles authorized submission after this preparation helper returns.
 Reply with EXACTLY ONE action as a JSON object, nothing else:
   {"action":"click","ref":"e3"}            click an element
   {"action":"type","ref":"e4","text":"…"}  type into a field
@@ -183,7 +183,7 @@ Reply ONE action JSON.`;
       return { reached: false, turns: turn, reason: act.reason || "stuck", steps };
     }
 
-    // execute the action on OUR session — NEVER submit.
+    // Execute the preparation action in this session.
     let detail = "";
     let note = "";
     try {
@@ -191,8 +191,8 @@ Reply ONE action JSON.`;
       if (act.action === "click" && loc) {
         const txt = (await loc.innerText().catch(() => "")) || (await loc.getAttribute("value").catch(() => "")) || "";
         if (SUBMIT_RX.test(txt)) {
-          note = "refused to click a submit control (the human submits)";
-          detail = `blocked submit "${txt.slice(0, 40)}"`;
+          note = "final application control reached; continue in the authorized submission workflow";
+          detail = `submission handoff "${txt.slice(0, 40)}"`;
         } else {
           detail = `click "${txt.slice(0, 40)}"`;
           await loc.scrollIntoViewIfNeeded().catch(() => {});

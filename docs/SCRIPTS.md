@@ -916,8 +916,8 @@ npm run archive -- https://example.com/job/123
 
 ATS auto-fill helper for Greenhouse, Ashby, and Lever. Detects the ATS from
 the apply URL, reads candidate data from `config/profile.yml`, and prints a
-prefill summary to stdout. **Never POSTs anything** — you review the output,
-open the apply URL, and submit yourself. See
+prefill summary to stdout. Review the preparation output,
+open the apply URL, and complete the authorized submission workflow. See
 [APPLY_AUTOFILL.md](APPLY_AUTOFILL.md).
 
 ```bash

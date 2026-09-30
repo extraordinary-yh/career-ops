@@ -86,7 +86,7 @@ export async function dropNewTabs(page: Page): Promise<void> {
 }
 
 /** SPA / apply-behind-a-button: if no form yet, click the first visible Apply CTA
- *  (NEVER a submit) to reveal the form. If it's an <a> with an application href,
+ *  (a navigation control) to reveal the form. If it's an <a> with an application href,
  *  NAVIGATE there directly (robust vs popups). Returns true if it acted. */
 export async function tryApplyTrigger(page: Page): Promise<boolean> {
   try {
@@ -100,7 +100,7 @@ export async function tryApplyTrigger(page: Page): Promise<boolean> {
         return true;
       }
     }
-    // 2) Otherwise click a visible Apply CTA (never a submit). dropNewTabs() has
+    // 2) Otherwise click a visible Apply CTA (a navigation control). dropNewTabs() has
     //    already neutralised target=_blank / window.open so it stays in-tab.
     const t = page
       .getByRole("button", { name: /apply|start application|begin application/i })
@@ -209,7 +209,7 @@ export async function multiStepInfo(page: Page): Promise<ApplyIssue | null> {
 
 /** READ THE REAL FORM BACK after filling: did every answer land? required fields
  *  still empty? any validation error visible? — the self-verification a blind
- *  selector script can't do. Returns warnings to show BEFORE the human submits. */
+ *  selector script can't do. Returns warnings to show before submission. */
 export async function verifyFill(frame: Frame, fields: ApplyField[], answers: Record<string, string>): Promise<ApplyIssue[]> {
   const meta = fields.map((f) => ({ id: f.id, label: f.label || "this field", type: f.type, required: !!f.required, combobox: !!f.combobox }));
   type R = { mismatches: string[]; requiredEmpty: string[]; valErrors: string[] };

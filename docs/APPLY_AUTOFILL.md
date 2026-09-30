@@ -2,8 +2,8 @@
 
 The `apply` mode interactive assistant helps you fill out applications for job postings. It reads the form questions in your browser and drafts personalized answers based on your profile and the evaluated report.
 
-**CRITICAL RULE: Career-Ops never submits.**
-The agent prepares the responses, selects the options, and types out the text fields. **You always click Submit.** This ensures you have the final say and gives you a chance to review the application before it is sent.
+**Application authority:** For authorized applications, review the completed form, click Submit, and verify the receipt. Carry existing authorization through the final click without asking again.
+The web preparation helper hands the form to the calling workflow; Job Radar uses its apply executor or browser control for the final click.
 
 ---
 
@@ -17,7 +17,7 @@ We have field-tested the auto-fill flow across several major ATS platforms (Ashb
 
 ### Lever
 
-- **Checkboxes and the Captcha Stay Yours:** Lever often pops an hCaptcha challenge when checkboxes or radio buttons are clicked programmatically. The agent therefore auto-fills text, textareas, and standard select dropdowns only, and never touches the checkboxes, the radio buttons, or the captcha widget. It lists every field it skipped along with recommended values, and you tick them, solve the captcha, and submit.
+- **Checkboxes and CAPTCHA:** Fill supported text and choice controls with known answers. If an interactive CAPTCHA appears, request the assistance needed to resolve it, then resume the already-authorized submission. Report any controls the tool could not operate.
 
 ### Workable
 

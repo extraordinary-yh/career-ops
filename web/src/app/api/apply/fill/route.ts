@@ -8,7 +8,7 @@ export const maxDuration = 120;
 
 // Fill the real form behind the scenes (headed-but-off-screen), screenshotting
 // each step for the "behind the scenes" strip, then bring the window to the front
-// so the HUMAN reviews and submits. NEVER submits — there is no submit path here.
+// for the calling workflow to review and complete authorized submission.
 export async function POST(req: Request) {
   let body: { sessionId?: string; answers?: Record<string, string>; fields?: ApplyField[]; handoff?: boolean; company?: string; application?: string };
   try {

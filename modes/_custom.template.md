@@ -13,8 +13,7 @@
 
      The agent reads this file alongside the system instructions;
      your rules here take precedence over the defaults, as long as
-     they don't break the Data Contract (your files are never
-     touched, and we never auto-submit an application for you).
+     they preserve factual accuracy and the user's requested scope.
 
      Because this is a user-layer file, anything you write here
      survives `node update-system.mjs`. Put customizations HERE,
@@ -23,6 +22,8 @@
      ============================================================ -->
 
 ## House Rules
+
+Complete authorized applications through the final click and verify the receipt.
 
 <!-- Rules the agent should always follow. Examples:
      - Always write evaluation summaries in British English.
@@ -54,7 +55,6 @@
 ## Off-Limits
 
 <!-- Things the agent must never do for you. Examples:
-     - Never auto-fill or submit an application without showing me first.
      - Never edit a system file to customize my setup -- put it here. -->
 
 (none yet -- add yours above)

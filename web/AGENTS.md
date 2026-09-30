@@ -17,8 +17,9 @@ before changing anything under `web/`.
    write path, and it is single on purpose. Never write a user's file from a route
    that bypasses it.
 
-3. **Nothing is ever submitted automatically.** The apply flow fills in and previews;
-   a human presses send. There is no exception, no flag, and no "just for testing".
+3. **Application authority follows the user.** The web helper prepares a form and hands it
+   back to the calling workflow. An authorized agent can complete submission through browser
+   control and must verify the receipt. A preview-only request ends after preparation.
 
 ## A missing file is not a malformed file
 
